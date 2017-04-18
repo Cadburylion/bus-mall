@@ -11,7 +11,7 @@ function SurveyImage(name, filename) {
 // return random images array index
 function selectRandomImagesIndex(array) {
   return Math.floor(Math.random() * array.length);
-};
+}
 
 var imagesOnSecondPreviousScreen = [];
 var imagesOnPreviousScreen = [];
@@ -70,11 +70,27 @@ var firstImage = document.getElementById('image1');
 var secondImage = document.getElementById('image2');
 var thirdImage = document.getElementById('image3');
 
+// add event listeners to DOM id's that invoke displayThreeImages when user clicks any image
+
+firstImage.addEventListener('click', displayThreeImages);
+secondImage.addEventListener('click', displayThreeImages);
+thirdImage.addEventListener('click', displayThreeImages);
+
+
+
+
+
 // show images in imagesOnScreen on index page
 
+function displayThreeImages(){
 
-function displayThreeImages{
-  
+  selectThreeRandomImages();
+  firstImage.src = imagesOnScreen[0].filename;
+  imagesOnScreen[0].shownAmount++;
+  secondImage.src = imagesOnScreen[1].filename;
+  imagesOnScreen[1].shownAmount++;
+  thirdImage.src = imagesOnScreen[2].filename;
+  imagesOnScreen[2].shownAmount++;
 }
 
 
