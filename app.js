@@ -82,18 +82,35 @@ thirdImage.addEventListener('click', displayThreeImages);
 
 // show images in imagesOnScreen on index page
 
-function displayThreeImages(){
+function displayThreeImages(event){
+console.log(event.target);
 
   selectThreeRandomImages();
+
+
   firstImage.src = imagesOnScreen[0].filename;
   imagesOnScreen[0].shownAmount++;
+  // for (imagesOnScreen[0] in imagesOnScreen){
+  //   imagesOnScreen[0].onclick = function(){
+  //     imagesOnScreen[0].clickAmount++;
+  //   };
+  // }
   secondImage.src = imagesOnScreen[1].filename;
   imagesOnScreen[1].shownAmount++;
   thirdImage.src = imagesOnScreen[2].filename;
   imagesOnScreen[2].shownAmount++;
+
 }
 
 
+//populate page with three random images on page load
+selectThreeRandomImages();
+firstImage.src = imagesOnScreen[0].filename;
+imagesOnScreen[0].shownAmount++;
+secondImage.src = imagesOnScreen[1].filename;
+imagesOnScreen[1].shownAmount++;
+thirdImage.src = imagesOnScreen[2].filename;
+imagesOnScreen[2].shownAmount++;
 
 
 
