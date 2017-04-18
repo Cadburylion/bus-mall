@@ -48,7 +48,6 @@ function SurveyImage(name, src) {
 
 
 
-// surveyImageContainer.appendChild(bag.src)
 
 // SurveyImage.prototype.createImageEl = function(eventHandler){
 //   var imgEl = document.createElement('img');
@@ -60,19 +59,39 @@ function SurveyImage(name, src) {
 //   return imgEl;
 // }
 
+// function handleSurveyImageClick(event){
+//   totalClicked++;
+//   if (totalClicked < 5){
+//     var currentImageId = event.target.id;
+//     for(var i=0; i<survayImageData.length; i++){
+//       if (currentImageId === survayImageData[i].name){
+//         survayImageData[i].timesClicked++;
+//         break
+//       }
+//     }
+//     displayThreeImages();
+//   } else {
+//     displayBarChart();
+//   }
+// }
 
-function displayImages(event){
 
-  event.preventDefault();
-  // var selectedImage = event.target;
-  // console.log(event);
-  var count = products[selectFromProducts()];
-  picSection1.src = count.src;
-  console.log(count);
-  count.shownAmount++;
+function displayImages(){
 
-  picSection2.src = products[selectFromProducts()].src;
-  picSection3.src = products[selectFromProducts()].src;
+  var countFirst = products[selectFromProducts()];
+  picSection1.src = countFirst.src;
+  countFirst.shownAmount++;
+  console.log(countFirst);
+
+  var countSecond = products[selectFromProducts()];
+  picSection2.src = countSecond.src;
+  countSecond.shownAmount++;
+  console.log(countSecond);
+
+  var countThird = products[selectFromProducts()];
+  picSection3.src = countThird.src;
+  countThird.shownAmount++;
+  console.log(countThird);
 }
 
 
