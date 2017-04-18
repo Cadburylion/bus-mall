@@ -62,9 +62,14 @@ function SurveyImage(name, src) {
 
 
 function displayImages(event){
+
+  event.preventDefault();
   // var selectedImage = event.target;
-  console.log(event);
-  picSection1.src = products[selectFromProducts()].src;
+  // console.log(event);
+  var count = products[selectFromProducts()];
+  picSection1.src = count.src;
+  console.log(count);
+  count.shownAmount++;
 
   picSection2.src = products[selectFromProducts()].src;
   picSection3.src = products[selectFromProducts()].src;
