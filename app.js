@@ -1,135 +1,106 @@
 'use strict';
 
-// var listOfImages = [
-//   'img/bag.jpg',
-//   'img/banana.jpg',
-//   'img/bathroom.jpg',
-//   'img/boots.jpg',
-//   'img/breakfast',
-//   'img/bubblegum.jpg',
-//   'img/chair',
-//   'img/cthulhu.jpg',
-//   'img/dog-duck.jpg',
-//   'img/dragon.jpg',
-//   'img/pen.jpg',
-//   'img/pet-sweetp.jpg',
-//   'img/scissors.jpg',
-//   'img/shark.jpg',
-//   'img/sweep.png',
-//   'img/tauntaun.jpg',
-//   'img/unicorn.jpg',
-//   'img/usb.gif',
-//   'img/water-can.jpg',
-//   'img/wine-glass.jpg'];
-
-// var survayImageData = [];
-// var totalClicked = 0;
-// var totalDisplayed = 0;
-
-// function getRandomIntInclusive(min, max) {
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
-
-var products = [];
-
-function selectFromProducts() {
-  return Math.floor(Math.random() * products.length);
-}
-
-function SurveyImage(name, src) {
+// image object constructor
+function SurveyImage(name, filename) {
   this.name = name;
-  this.src = src;
+  this.filename = './img/' + filename;
   this.shownAmount = 0;
   this.clickAmount = 0;
-  products.push(this);
-  // this.htmlId = htmlId;
-  // console.log('aw jeah');
+}
+
+// return random images array index
+function selectRandomImagesIndex(array) {
+  return Math.floor(Math.random() * array.length);
+};
+
+var imagesonSecondPreviousScreen = [];
+var imagesOnPreviousScreen = [];
+var imagesOnScreen = [];
+
+var images = [
+  new SurveyImage('bag', 'img/bag.jpg');
+  new SurveyImage('banana', 'img/banana.jpg');
+  new SurveyImage('bathroom', 'img/bathroom.jpg');
+  new SurveyImage('boots', 'img/boots.jpg');
+  new SurveyImage('breakfast', 'img/breakfast.jpg');
+  new SurveyImage('bubblegum', 'img/bubblegum.jpg');
+  new SurveyImage('chair', 'img/chair.jpg');
+  new SurveyImage('cthulhu', 'img/cthulhu.jpg');
+  new SurveyImage('dog-duck', 'img/dog-duck.jpg');
+  new SurveyImage('dragon', 'img/dragon.jpg');
+  new SurveyImage('pen', 'img/pen.jpg');
+  new SurveyImage('pet-sweep', 'img/pet-sweep.jpg');
+  new SurveyImage('scissors', 'img/scissors.jpg');
+  new SurveyImage('shark', 'img/shark.jpg');
+  new SurveyImage('sweep', 'img/sweep.png');
+  new SurveyImage('tauntaun', 'img/tauntaun.jpg');
+  new SurveyImage('unicorn', 'img/unicorn.jpg');
+  new SurveyImage('usb', 'img/usb.gif');
+  new SurveyImage('water-can', 'img/water-can.jpg');
+  new SurveyImage('wine-glass', 'img/wine-glass.jpg');
+];
+
+
+function selectThreeRandomPhotos(){
+
+  images = images.concat(phootosOnSecondToLastScreen);
+  imagesOnSecondToLastScreen = imagesOnPreviousScreen;
+  imagesOnPreviousScreen = imagesOnScreen;
+
+  // clears out imagesOnScreen
+  imagesOnScreen = [];
+  // create a var nextPhoto to keep track of the next Photo we take out of images
+  // splice out a photo object (which removes it from images)
+  var nextPhoto = images.splice(selectRandomImagesIndex(images), 1);
+  // concat the array returned by splice onto imagesOnScreen
+  imagesOnScreen = imagesOnScreen.concat(nextPhoto);
+  // repeat two more times to get three images
+  nextPhoto = images.splice(selectRandomImagesIndex(images), 1);
+  imagesOnScreen = imagesOnScreen.concat(nextPhoto);
+  nextPhoto = images.splice(selectRandomImagesIndex(images), 1);
+  imagesOnScreen = imagesOnScreen.concat(nextPhoto);
+
+
+  imagesOnPreviousScreen.concat(imagesOnScreen);
+  return imagesOnScreen;
 }
 
 
 
 
-// SurveyImage.prototype.createImageEl = function(eventHandler){
-//   var imgEl = document.createElement('img');
-//   imgEl.setAttribute('id', this.name);
-//   imgEl.setAttribute('src', this.src);
-//   imgEl.addEventListener('click', eventHandler);
-//   this.timesDisplayed++;
-//   totalDisplayed++;
-//   return imgEl;
+
+// function displayImages(event){
+//
+//
+//
+//
+//   var countFirst = products[selectFromImages()];
+//   picSection1.src = countFirst.src;
+//   countFirst.shownAmount++;
+//   console.log(countFirst);
+//
+//   var countSecond = products[selectFromImages()];
+//   picSection2.src = countSecond.src;
+//   countSecond.shownAmount++;
+//   console.log(countSecond);
+//
+//   var countThird = products[selectFromImages()];
+//   picSection3.src = countThird.src;
+//   countThird.shownAmount++;
+//   console.log(countThird);
 // }
-
-// function handleSurveyImageClick(event){
-//   totalClicked++;
-//   if (totalClicked < 5){
-//     var currentImageId = event.target.id;
-//     for(var i=0; i<survayImageData.length; i++){
-//       if (currentImageId === survayImageData[i].name){
-//         survayImageData[i].timesClicked++;
-//         break
-//       }
-//     }
-//     displayThreeImages();
-//   } else {
-//     displayBarChart();
-//   }
-// }
-
-
-function displayImages(){
-
-  var countFirst = products[selectFromProducts()];
-  picSection1.src = countFirst.src;
-  countFirst.shownAmount++;
-  console.log(countFirst);
-
-  var countSecond = products[selectFromProducts()];
-  picSection2.src = countSecond.src;
-  countSecond.shownAmount++;
-  console.log(countSecond);
-
-  var countThird = products[selectFromProducts()];
-  picSection3.src = countThird.src;
-  countThird.shownAmount++;
-  console.log(countThird);
-}
-
-
-
-var picSection1 = document.getElementById('image1');
-picSection1.addEventListener('click', displayImages);
-var picSection2 = document.getElementById('image2');
-picSection2.addEventListener('click', displayImages);
-var picSection3 = document.getElementById('image3');
-picSection3.addEventListener('click', displayImages);
+//
+//
+//
+// var picSection1 = document.getElementById('image1');
+// picSection1.addEventListener('click', displayImages);
+// var picSection2 = document.getElementById('image2');
+// picSection2.addEventListener('click', displayImages);
+// var picSection3 = document.getElementById('image3');
+// picSection3.addEventListener('click', displayImages);
 
 // var displayImages = function(){
 //   picSection1.src = products[selectFromProducts()].src;
 //   picSection2.src = products[selectFromProducts()].src;
 //   picSection3.src = products[selectFromProducts()].src;
 // };
-
-
-
-var bag = new SurveyImage('bag', 'img/bag.jpg');
-var banana = new SurveyImage('banana', 'img/banana.jpg');
-var bathroom = new SurveyImage('bathroom', 'img/bathroom.jpg');
-var boots = new SurveyImage('boots', 'img/boots.jpg');
-var breakfast = new SurveyImage('breakfast', 'img/breakfast.jpg');
-var bubblegum = new SurveyImage('bubblegum', 'img/bubblegum.jpg');
-var chair = new SurveyImage('chair', 'img/chair.jpg');
-var cthulhu = new SurveyImage('cthulhu', 'img/cthulhu.jpg');
-var dogDuck = new SurveyImage('dog-duck', 'img/dog-duck.jpg');
-var dragon = new SurveyImage('dragon', 'img/dragon.jpg');
-var pen = new SurveyImage('pen', 'img/pen.jpg');
-var petSweep = new SurveyImage('pet-sweep', 'img/pet-sweep.jpg');
-var scissors = new SurveyImage('scissors', 'img/scissors.jpg');
-var shark = new SurveyImage('shark', 'img/shark.jpg');
-var sweep = new SurveyImage('sweep', 'img/sweep.png');
-var tauntaun = new SurveyImage('tauntaun', 'img/tauntaun.jpg');
-var unicorn = new SurveyImage('unicorn', 'img/unicorn.jpg');
-var usb = new SurveyImage('usb', 'img/usb.gif');
-var waterCan = new SurveyImage('water-can', 'img/water-can.jpg');
-var wineGlass = new SurveyImage('wine-glass', 'img/wine-glass.jpg');
-
-displayImages();
