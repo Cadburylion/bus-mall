@@ -13,56 +13,68 @@ function selectRandomImagesIndex(array) {
   return Math.floor(Math.random() * array.length);
 };
 
-var imagesonSecondPreviousScreen = [];
+var imagesOnSecondPreviousScreen = [];
 var imagesOnPreviousScreen = [];
 var imagesOnScreen = [];
 
 var images = [
-  new SurveyImage('bag', 'img/bag.jpg');
-  new SurveyImage('banana', 'img/banana.jpg');
-  new SurveyImage('bathroom', 'img/bathroom.jpg');
-  new SurveyImage('boots', 'img/boots.jpg');
-  new SurveyImage('breakfast', 'img/breakfast.jpg');
-  new SurveyImage('bubblegum', 'img/bubblegum.jpg');
-  new SurveyImage('chair', 'img/chair.jpg');
-  new SurveyImage('cthulhu', 'img/cthulhu.jpg');
-  new SurveyImage('dog-duck', 'img/dog-duck.jpg');
-  new SurveyImage('dragon', 'img/dragon.jpg');
-  new SurveyImage('pen', 'img/pen.jpg');
-  new SurveyImage('pet-sweep', 'img/pet-sweep.jpg');
-  new SurveyImage('scissors', 'img/scissors.jpg');
-  new SurveyImage('shark', 'img/shark.jpg');
-  new SurveyImage('sweep', 'img/sweep.png');
-  new SurveyImage('tauntaun', 'img/tauntaun.jpg');
-  new SurveyImage('unicorn', 'img/unicorn.jpg');
-  new SurveyImage('usb', 'img/usb.gif');
-  new SurveyImage('water-can', 'img/water-can.jpg');
-  new SurveyImage('wine-glass', 'img/wine-glass.jpg');
+  new SurveyImage('bag', 'bag.jpg'),
+  new SurveyImage('banana', 'banana.jpg'),
+  new SurveyImage('bathroom', 'bathroom.jpg'),
+  new SurveyImage('boots', 'boots.jpg'),
+  new SurveyImage('breakfast', 'breakfast.jpg'),
+  new SurveyImage('bubblegum', 'bubblegum.jpg'),
+  new SurveyImage('chair', 'chair.jpg'),
+  new SurveyImage('cthulhu', 'cthulhu.jpg'),
+  new SurveyImage('dog-duck', 'dog-duck.jpg'),
+  new SurveyImage('dragon', 'dragon.jpg'),
+  new SurveyImage('pen', 'pen.jpg'),
+  new SurveyImage('pet-sweep', 'pet-sweep.jpg'),
+  new SurveyImage('scissors', 'scissors.jpg'),
+  new SurveyImage('shark', 'shark.jpg'),
+  new SurveyImage('sweep', 'sweep.png'),
+  new SurveyImage('tauntaun', 'tauntaun.jpg'),
+  new SurveyImage('unicorn', 'unicorn.jpg'),
+  new SurveyImage('usb-tentacle', 'usb.gif'),
+  new SurveyImage('water-can', 'water-can.jpg'),
+  new SurveyImage('wine-glass', 'wine-glass.jpg'),
 ];
 
 
-function selectThreeRandomPhotos(){
+function selectThreeRandomImages(){
 
-  images = images.concat(phootosOnSecondToLastScreen);
-  imagesOnSecondToLastScreen = imagesOnPreviousScreen;
+  images = images.concat(imagesOnSecondPreviousScreen);
+  imagesOnSecondPreviousScreen = imagesOnPreviousScreen;
   imagesOnPreviousScreen = imagesOnScreen;
 
   // clears out imagesOnScreen
   imagesOnScreen = [];
   // create a var nextPhoto to keep track of the next Photo we take out of images
   // splice out a photo object (which removes it from images)
-  var nextPhoto = images.splice(selectRandomImagesIndex(images), 1);
+  var nextImage = images.splice(selectRandomImagesIndex(images), 1);
   // concat the array returned by splice onto imagesOnScreen
-  imagesOnScreen = imagesOnScreen.concat(nextPhoto);
+  imagesOnScreen = imagesOnScreen.concat(nextImage);
   // repeat two more times to get three images
-  nextPhoto = images.splice(selectRandomImagesIndex(images), 1);
-  imagesOnScreen = imagesOnScreen.concat(nextPhoto);
-  nextPhoto = images.splice(selectRandomImagesIndex(images), 1);
-  imagesOnScreen = imagesOnScreen.concat(nextPhoto);
+  nextImage = images.splice(selectRandomImagesIndex(images), 1);
+  imagesOnScreen = imagesOnScreen.concat(nextImage);
+  nextImage = images.splice(selectRandomImagesIndex(images), 1);
+  imagesOnScreen = imagesOnScreen.concat(nextImage);
 
 
   imagesOnPreviousScreen.concat(imagesOnScreen);
   return imagesOnScreen;
+}
+
+// assign variables to DOM id's
+var firstImage = document.getElementById('image1');
+var secondImage = document.getElementById('image2');
+var thirdImage = document.getElementById('image3');
+
+// show images in imagesOnScreen on index page
+
+
+function displayThreeImages{
+  
 }
 
 
