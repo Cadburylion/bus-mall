@@ -15,7 +15,8 @@ html, body {
   margin-top: 200px;
   text-align: center;
   font-size: 4em;
-  font-family: arial;
+  font-family: 'Lobster Two', cursive;
+  letter-spacing: 2px;
 }
 
 #surveyImageContainer {

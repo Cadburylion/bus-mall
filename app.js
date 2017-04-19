@@ -43,11 +43,12 @@ var images = [
 
 
 function selectThreeRandomImages(){
-
+// objects in imagesOnSecondPreviousScreen added to images array
   images = images.concat(imagesOnSecondPreviousScreen);
+  // imagesOnSecondPreviousScreen assigned value of objects in imagesOnPreviousScreen
   imagesOnSecondPreviousScreen = imagesOnPreviousScreen;
+  // imagesOnPreviousScreen assigned value of objects in imagesOnScreen
   imagesOnPreviousScreen = imagesOnScreen;
-
   // clears out imagesOnScreen
   imagesOnScreen = [];
   // create a var nextPhoto to keep track of the next Photo we take out of images
@@ -82,17 +83,16 @@ thirdImage.addEventListener('click', handleEvent);
 
 function handleEvent(event){
   totalClicks++;
-  console.log(totalClicks);
-
+//if the event fired on the firstImage element, increment clickAmount on imagesOnScreen[0]
   if (firstImage === event.target){
     imagesOnScreen[0].clickAmount++;
-    console.log(event.target);
+//if the event fired on the secondImage element, increment clickAmount on imagesOnScreen[1]
   } else if (secondImage === event.target){
     imagesOnScreen[1].clickAmount++;
-    console.log(event.target);
+//if the event fired on the thirdImage element, increment clickAmount on imagesOnScreen[2]
   } else {
     imagesOnScreen[2].clickAmount++;
-    console.log(event.target);
+
   }
 
   if (totalClicks === 25){
@@ -101,7 +101,6 @@ function handleEvent(event){
     thirdImage.removeEventListener('click', handleEvent);
 
     displayMetrics();
-    // clear image elements
   }
 
   //invoke selectThreeRandomImages to get 3 random objects into imagesOnScreen array
