@@ -1,45 +1,54 @@
 'use strict';
 
 var canvas = document.getElementById('chart-canvas');
-canvas.height = '500px';
 canvas.width = '500px';
+canvas.height = '500px';
 
 
 var ctx = canvas.getContext('2d');
 
-// use Chartjs
 
-var data ={
+// use chartjs
+var data = {
   labels: ['duncan', 'slug', 'glorb', 'quazi'],
   datasets: [
     {
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+        '#f0f',
+        '#0f0',
+        '#f00',
+        '#0ff',
       ],
-      data: [ 23, 34, 40, 44,]
-    }]
-};
+      data: [ 23, 34, 73, 60]
+    },
+    {
+      backgroundImage: [
+        'url("./assets/banana.jpg")',
+        '#0f0',
+        '#f00',
+        '#0ff',
+      ],
+      data: [ 34, 44, 99, 70]
+    },
+  ]
+}
+
 
 new Chart(ctx, {
-  type: 'bar',
+  type: 'doughnut',
   data: data,
 });
 
 
-//        start x, y, width, height
-// ctx.fillRect(200, 300, 50, 100);
+//  startx, starty, width, height
+// ctx.fillRect(200, 300, 50, 100)
 
-
+//
 // var peeps = [
 //   {
 //     name: 'dunk',
 //     age: 16,
-//     colo: 'blue',
+//     color: 'blue',
 //   },
 //   {
 //     name: 'slug',
@@ -52,20 +61,41 @@ new Chart(ctx, {
 //     color: 'red',
 //   },
 //   {
-//     name: 'lion',
+//     name: 'byte',
 //     age: 77,
 //     color: 'black',
 //   },
 //   {
-//     name: 'tiger',
+//     name: 'byte',
 //     age: 100,
 //     color: 'magenta',
 //   },
-// ];
-//
+// ]
 //
 // var barWidth = 500 / peeps.length;
-// for (var i = 0; i < peeps.length; i++){
-//   ctx.fillStyle = (peeps[i].color);
+// for(var i = 0; i < peeps.length; i++){
+//   ctx.fillStyle = peeps[i].color;
 //   ctx.fillRect( i * barWidth, 0, barWidth, peeps[i].age / 100 * 500);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+// ) {
+//
 // }

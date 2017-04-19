@@ -1,5 +1,5 @@
 'use strict';
-
+ var totalClicks = 0;
 // image object constructor
 function SurveyImage(name, filename) {
   this.name = name;
@@ -61,7 +61,7 @@ function selectThreeRandomImages(){
   imagesOnScreen = imagesOnScreen.concat(nextImage);
 
 
-  imagesOnPreviousScreen.concat(imagesOnScreen);
+  // imagesOnPreviousScreen.concat(imagesOnScreen);
   return imagesOnScreen;
 }
 
@@ -70,38 +70,49 @@ var firstImage = document.getElementById('image1');
 var secondImage = document.getElementById('image2');
 var thirdImage = document.getElementById('image3');
 
-// add event listeners to DOM id's that invoke displayThreeImages when user clicks any image
+// add event listeners to DOM id's that invoke handleEvent when user clicks any image
 
-firstImage.addEventListener('click', displayThreeImages);
-secondImage.addEventListener('click', displayThreeImages);
-thirdImage.addEventListener('click', displayThreeImages);
-
-
+firstImage.addEventListener('click', handleEvent);
+secondImage.addEventListener('click', handleEvent);
+thirdImage.addEventListener('click', handleEvent);
 
 
+// Displays three randomly selected images on the index page
 
-// show images in imagesOnScreen on index page
+function handleEvent(event){
+  totalClicks++;
+  console.log(totalClicks);
 
-function displayThreeImages(event){
-console.log(event.target);
+  if (firstImage === event.target){
+    imagesOnScreen[0].clickAmount++;
+    console.log(event.target);
+  } else if (secondImage === event.target){
+    imagesOnScreen[1].clickAmount++;
+    console.log(event.target);
+  } else {
+    imagesOnScreen[2].clickAmount++;
+    console.log(event.target);
+  }
+
+  if (totalClicks === 25){
+    firstImage.removeEventListener('click', handleEvent);
+    secondImage.removeEventListener('click', handleEvent);
+    thirdImage.removeEventListener('click', handleEvent);
+
+    displayMetrics();
+    // clear image elements
+  }
+
 
   selectThreeRandomImages();
 
-
   firstImage.src = imagesOnScreen[0].filename;
   imagesOnScreen[0].shownAmount++;
-  // for (imagesOnScreen[0] in imagesOnScreen){
-  //   imagesOnScreen[0].onclick = function(){
-  //     imagesOnScreen[0].clickAmount++;
-  //   };
-  // }
   secondImage.src = imagesOnScreen[1].filename;
   imagesOnScreen[1].shownAmount++;
   thirdImage.src = imagesOnScreen[2].filename;
   imagesOnScreen[2].shownAmount++;
-
 }
-
 
 //populate page with three random images on page load
 selectThreeRandomImages();
@@ -114,38 +125,90 @@ imagesOnScreen[2].shownAmount++;
 
 
 
-// function displayImages(event){
-//
-//
-//
-//
-//   var countFirst = products[selectFromImages()];
-//   picSection1.src = countFirst.src;
-//   countFirst.shownAmount++;
-//   console.log(countFirst);
-//
-//   var countSecond = products[selectFromImages()];
-//   picSection2.src = countSecond.src;
-//   countSecond.shownAmount++;
-//   console.log(countSecond);
-//
-//   var countThird = products[selectFromImages()];
-//   picSection3.src = countThird.src;
-//   countThird.shownAmount++;
-//   console.log(countThird);
-// }
-//
-//
-//
-// var picSection1 = document.getElementById('image1');
-// picSection1.addEventListener('click', displayImages);
-// var picSection2 = document.getElementById('image2');
-// picSection2.addEventListener('click', displayImages);
-// var picSection3 = document.getElementById('image3');
-// picSection3.addEventListener('click', displayImages);
+function displayMetrics(){
 
-// var displayImages = function(){
-//   picSection1.src = products[selectFromProducts()].src;
-//   picSection2.src = products[selectFromProducts()].src;
-//   picSection3.src = products[selectFromProducts()].src;
-// };
+
+  images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
+
+
+  var ctx = document.getElementById('survey-metrics').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+      labels: [
+        'bag',
+        'banana',
+        'bathroom',
+        'boots',
+        'breakfast',
+        'bubblegum',
+        'chair',
+        'cthulhu',
+        'dog-duck',
+        'dragon',
+        'pen',
+        'pet-sweep',
+        'scissors',
+        'shark',
+        'sweep',
+        'tauntaun',
+        'unicorn',
+        'usb-tentacle',
+        'water-can',
+        'wine-glass',
+      ],
+      datasets: [{
+        label: '# of times chosen',
+        data: [
+          images[0].clickAmount,
+          images[1].clickAmount,
+          images[2].clickAmount,
+          images[3].clickAmount,
+          images[4].clickAmount,
+          images[5].clickAmount,
+          images[6].clickAmount,
+          images[7].clickAmount,
+          images[8].clickAmount,
+          images[9].clickAmount,
+          images[10].clickAmount,
+          images[11].clickAmount,
+          images[12].clickAmount,
+          images[13].clickAmount,
+          images[14].clickAmount,
+          // images[15].clickAmount,
+          // images[16].clickAmount,
+          // images[17].clickAmount,
+          // images[18].clickAmount,
+          // images[19].clickAmount,
+          // images[20].clickAmount,
+        ],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
+}
