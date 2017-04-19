@@ -1,8 +1,39 @@
 * {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
 
+html, body {
+  height: 100%;
+  background: beige;
+}
+
+.survey-question {
+  margin: 0 auto;
+  margin-top: 200px;
+  text-align: center;
+  font-size: 4em;
+  font-family: 'Lobster Two', cursive;
+  letter-spacing: 2px;
+}
+
+#surveyImageContainer {
+  margin: 0 auto;
+  margin-top: 100px;
+  width: 760px;
+}
+
+#canvas-div {
+  margin: 0 auto;
+  height: 500px;
+  width: 960px;
 }
 
 .image-size {
   height: 250px;
   width: 250px;
+  border: 2px solid tan;
+  border-radius: 10%;
 }
