@@ -7,16 +7,24 @@
 
 html, body {
   height: 100%;
-  backgroun: beige;
+  background: beige;
 }
 
-canvas {
-  width: 500px;
+#surveyImageContainer {
+  margin: 0 auto;
+  width: 760px;
+}
+
+#canvas-div {
+  margin: 0 auto;
   height: 500px;
-  border: 1px dotted blue;
+  width: 960px;
+  border: 1px solid blue;
 }
 
 .image-size {
   height: 250px;
   width: 250px;
+  border: 2px solid tan;
+  border-radius: 10%;
 }
