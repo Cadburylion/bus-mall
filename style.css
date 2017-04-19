@@ -10,8 +10,17 @@ html, body {
   background: beige;
 }
 
+.survey-question {
+  margin: 0 auto;
+  margin-top: 200px;
+  text-align: center;
+  font-size: 4em;
+  font-family: arial;
+}
+
 #surveyImageContainer {
   margin: 0 auto;
+  margin-top: 100px;
   width: 760px;
 }
 
@@ -19,7 +28,6 @@ html, body {
   margin: 0 auto;
   height: 500px;
   width: 960px;
-  border: 1px solid blue;
 }
 
 .image-size {

@@ -1,5 +1,6 @@
 'use strict';
- var totalClicks = 0;
+
+var totalClicks = 0;
 // image object constructor
 function SurveyImage(name, filename) {
   this.name = name;
@@ -103,9 +104,9 @@ function handleEvent(event){
     // clear image elements
   }
 
-
+  //invoke selectThreeRandomImages to get 3 random objects into imagesOnScreen array
   selectThreeRandomImages();
-
+  //populate img elements on HTML with 3 random images
   firstImage.src = imagesOnScreen[0].filename;
   imagesOnScreen[0].shownAmount++;
   secondImage.src = imagesOnScreen[1].filename;
@@ -124,10 +125,10 @@ thirdImage.src = imagesOnScreen[2].filename;
 imagesOnScreen[2].shownAmount++;
 
 
-
+// populate Chartjs with data
 function displayMetrics(){
 
-
+  //return all objects to images array
   images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
 
 

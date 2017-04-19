@@ -1,4 +1,4 @@
-User Stories:
+# User Stories
 
 
 As a market researcher, I want to an app that lets me quickly add new content to present to the focus group participants.
