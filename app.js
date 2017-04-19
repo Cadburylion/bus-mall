@@ -96,9 +96,8 @@ function handleEvent(event){
   }
 
   if (totalClicks === 25){
-    firstImage.removeEventListener('click', handleEvent);
-    secondImage.removeEventListener('click', handleEvent);
-    thirdImage.removeEventListener('click', handleEvent);
+    // set the content of the surveyImageContainer element to nothing, erasing it
+    surveyImageContainer.textContent = '';
 
     displayMetrics();
   }
@@ -123,13 +122,11 @@ imagesOnScreen[1].shownAmount++;
 thirdImage.src = imagesOnScreen[2].filename;
 imagesOnScreen[2].shownAmount++;
 
-
 // populate Chartjs with data
 function displayMetrics(){
 
   //return all objects to images array
   images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
-
 
   var ctx = document.getElementById('survey-metrics').getContext('2d');
   var myChart = new Chart(ctx, {
