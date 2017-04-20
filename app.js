@@ -7,11 +7,16 @@ function SurveyImage(name, filename) {
   this.filename = './img/' + filename;
   this.shownAmount = 0;
   this.clickAmount = 0;
+  this.percentChosen = 0;
 }
 
 // return random images array index
 function selectRandomImagesIndex(array) {
   return Math.floor(Math.random() * array.length);
+}
+
+function getPercentage(click, shown){
+  return click / shown * 100;
 }
 
 var imagesOnSecondPreviousScreen = [];
@@ -142,6 +147,10 @@ imagesOnScreen[2].shownAmount++;
 // populate Chartjs with data
 function displayMetrics(){
 
+  for (var i = 0; i < images.length; i++){
+    images[i].percentChosen = getPercentage(images[i].clickAmount, images[i].shownAmount);
+  }
+
   //return all objects to images array
 
   var ctx = document.getElementById('survey-metrics').getContext('2d');
@@ -229,7 +238,7 @@ function displayMetrics(){
     },
     options: {
       scales: {
-        yAxes: [{
+        xAxes: [{
           ticks: {
             beginAtZero:true
           }
