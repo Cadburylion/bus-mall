@@ -16,11 +16,7 @@ function selectRandomImagesIndex(array) {
 }
 // calculates percentage of times an item was picked when shown
 function getPercentage(click, shown){
-  if (shown) {
-    return click / shown * 100;
-  } else {
-    return -1;
-  }
+  return click / shown * 100;
 }
 
 var imagesOnSecondPreviousScreen = [];
@@ -172,7 +168,7 @@ function displayMetrics(){
 
   var dataColorStart = 'hsl(';
   var dataColorEnd = ',100%,50%)';
-  var dataColorEndOpacity = ',100%, 20%)';
+  var dataColorEndOpacity = ',100%, 35%)';
 
   var dataColor = -18;
   for (var c = 0; c < images.length; c++) {

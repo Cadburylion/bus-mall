@@ -31,9 +31,38 @@ html, body {
   width: 960px;
 }
 
-.image-size {
+.image1 {
   height: 250px;
   width: 250px;
   border: 2px solid tan;
   border-radius: 10%;
+}
+
+.image1:hover {
+  transform: perspective(2000px) scale(1.2) rotateY(20deg);
+  transition: transform .5s;
+}
+
+.image2 {
+  height: 250px;
+  width: 250px;
+  border: 2px solid tan;
+  border-radius: 10%;
+}
+
+.image2:hover {
+  transform: scale(1.2);
+  transition: transform .5s;
+}
+
+.image3 {
+  height: 250px;
+  width: 250px;
+  border: 2px solid tan;
+  border-radius: 10%;
+}
+
+.image3:hover {
+  transform: perspective(2000px) scale(1.2) rotateY(-20deg);
+  transition: transform .5s;
 }
