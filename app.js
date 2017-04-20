@@ -7,11 +7,16 @@ function SurveyImage(name, filename) {
   this.filename = './img/' + filename;
   this.shownAmount = 0;
   this.clickAmount = 0;
+  this.chosenPercent = 0;
 }
 
 // return random images array index
 function selectRandomImagesIndex(array) {
   return Math.floor(Math.random() * array.length);
+}
+// calculates percentage of times an item was picked when shown
+function getPercentage(click, shown){
+  return click / shown * 100;
 }
 
 var imagesOnSecondPreviousScreen = [];
@@ -21,7 +26,7 @@ var imagesOnScreen = [];
 var images = [
   new SurveyImage('bag', 'bag.jpg'),
   new SurveyImage('banana', 'banana.jpg'),
-  new SurveyImage('bathroom', 'bathroom.jpg'),
+  new SurveyImage('bathroom-media-stand', 'bathroom.jpg'),
   new SurveyImage('boots', 'boots.jpg'),
   new SurveyImage('breakfast', 'breakfast.jpg'),
   new SurveyImage('bubblegum', 'bubblegum.jpg'),
@@ -41,9 +46,15 @@ var images = [
   new SurveyImage('wine-glass', 'wine-glass.jpg'),
 ];
 
+try {
+  images = JSON.parse(localStorage.images);
+} catch(error){
+  console.log('something went wrong getting local storage', error);
+}
 
 function selectThreeRandomImages(){
 // objects in imagesOnSecondPreviousScreen added to images array
+// console.log('select images', imagesOnSecondPreviousScreen);
   images = images.concat(imagesOnSecondPreviousScreen);
   // imagesOnSecondPreviousScreen assigned value of objects in imagesOnPreviousScreen
   imagesOnSecondPreviousScreen = imagesOnPreviousScreen;
@@ -72,16 +83,16 @@ var firstImage = document.getElementById('image1');
 var secondImage = document.getElementById('image2');
 var thirdImage = document.getElementById('image3');
 
-// add event listeners to DOM id's that invoke handleEvent when user clicks any image
+// add event listeners to DOM id's that invoke handleEventClick when user clicks any image
 
-firstImage.addEventListener('click', handleEvent);
-secondImage.addEventListener('click', handleEvent);
-thirdImage.addEventListener('click', handleEvent);
-
+firstImage.addEventListener('click', handleEventClick);
+secondImage.addEventListener('click', handleEventClick);
+thirdImage.addEventListener('click', handleEventClick);
 
 // Displays three randomly selected images on the index page
 
-function handleEvent(event){
+function handleEventClick(event){
+  console.log('images', images);
   totalClicks++;
 //if the event fired on the firstImage element, increment clickAmount on imagesOnScreen[0]
   if (firstImage === event.target){
@@ -92,14 +103,21 @@ function handleEvent(event){
 //if the event fired on the thirdImage element, increment clickAmount on imagesOnScreen[2]
   } else {
     imagesOnScreen[2].clickAmount++;
-
   }
 
   if (totalClicks === 25){
     // set the content of the surveyImageContainer element to nothing, erasing it
+    var surveyImageContainer = document.getElementById('surveyImageContainer');
     surveyImageContainer.textContent = '';
+    images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
 
     displayMetrics();
+
+    try {
+      localStorage.images = JSON.stringify(images);
+    } catch(error){
+      console.log('something went wrong', error);
+    }
   }
 
   //invoke selectThreeRandomImages to get 3 random objects into imagesOnScreen array
@@ -125,10 +143,15 @@ imagesOnScreen[2].shownAmount++;
 // populate Chartjs with data
 function displayMetrics(){
 
+  //invokes percentage calculator with object parameter arguments and updates chosenPercent parameter
+  for (var i = 0; i < images.length; i++){
+    images[i].chosenPercent = getPercentage(images[i].clickAmount, images[i].shownAmount);
+  }
+
   //return all objects to images array
-  images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
 
   var ctx = document.getElementById('survey-metrics').getContext('2d');
+
   var myChart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
@@ -199,20 +222,20 @@ function displayMetrics(){
           'rgba(178, 84, 183, 0.2)',
           'rgba(50, 83, 234, 0.2)',
         ],
-        borderColor: [
-          'rgba(255,99,132,1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
+        // borderColor: [
+        //   'rgba(255,99,132,1)',
+        //   'rgba(54, 162, 235, 1)',
+        //   'rgba(255, 206, 86, 1)',
+        //   'rgba(75, 192, 192, 1)',
+        //   'rgba(153, 102, 255, 1)',
+        //   'rgba(255, 159, 64, 1)'
+        // ],
         borderWidth: 1
       }]
     },
     options: {
       scales: {
-        yAxes: [{
+        xAxes: [{
           ticks: {
             beginAtZero:true
           }
@@ -221,3 +244,34 @@ function displayMetrics(){
     }
   });
 }
+
+// below is cleaner chart code template
+
+// var data = {
+//   labels: ['duncan', 'slug', 'glorb', 'quazi'],
+//   datasets: [
+//     {
+//       backgroundColor: [
+//         '#f0f',
+//         '#0f0',
+//         '#f00',
+//         '#0ff',
+//       ],
+//       data: [ 23, 34, 73, 60]
+//     },
+//     {
+//       backgroundImage: [
+//         'url("./assets/banana.jpg")',
+//         '#0f0',
+//         '#f00',
+//         '#0ff',
+//       ],
+//       data: [ 34, 44, 99, 70]
+//     },
+//   ]
+// }
+//
+// new Chart(ctx, {
+//   type: 'doughnut',
+//   data: data,
+// });
