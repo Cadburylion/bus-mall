@@ -49,7 +49,6 @@ var images = [
 try {
   images = JSON.parse(localStorage.images);
 } catch(error){
-  console.log('error retreiving local storage');
 }
 
 function selectThreeRandomImages(){
@@ -89,7 +88,6 @@ firstImage.addEventListener('click', handleEventClick);
 secondImage.addEventListener('click', handleEventClick);
 thirdImage.addEventListener('click', handleEventClick);
 
-
 // Displays three randomly selected images on the index page
 
 function handleEventClick(event){
@@ -104,7 +102,6 @@ function handleEventClick(event){
 //if the event fired on the thirdImage element, increment clickAmount on imagesOnScreen[2]
   } else {
     imagesOnScreen[2].clickAmount++;
-
   }
 
   if (totalClicks === 25){
@@ -144,7 +141,7 @@ imagesOnScreen[2].shownAmount++;
 // populate Chartjs with data
 function displayMetrics(){
 
-  //invokes percentage calculator with object parameter arguments and updates percentChosen parameter 
+  //invokes percentage calculator with object parameter arguments and updates percentChosen parameter
   for (var i = 0; i < images.length; i++){
     images[i].percentChosen = getPercentage(images[i].clickAmount, images[i].shownAmount);
   }
