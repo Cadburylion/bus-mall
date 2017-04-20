@@ -7,7 +7,7 @@ function SurveyImage(name, filename) {
   this.filename = './img/' + filename;
   this.shownAmount = 0;
   this.clickAmount = 0;
-  this.percentChosen = 0;
+  this.chosenPercent = 0;
 }
 
 // return random images array index
@@ -26,7 +26,7 @@ var imagesOnScreen = [];
 var images = [
   new SurveyImage('bag', 'bag.jpg'),
   new SurveyImage('banana', 'banana.jpg'),
-  new SurveyImage('bathroom', 'bathroom.jpg'),
+  new SurveyImage('bathroom-media-stand', 'bathroom.jpg'),
   new SurveyImage('boots', 'boots.jpg'),
   new SurveyImage('breakfast', 'breakfast.jpg'),
   new SurveyImage('bubblegum', 'bubblegum.jpg'),
@@ -49,6 +49,7 @@ var images = [
 try {
   images = JSON.parse(localStorage.images);
 } catch(error){
+  console.log('something went wrong getting local storage', error);
 }
 
 function selectThreeRandomImages(){
@@ -106,6 +107,7 @@ function handleEventClick(event){
 
   if (totalClicks === 25){
     // set the content of the surveyImageContainer element to nothing, erasing it
+    var surveyImageContainer = document.getElementById('surveyImageContainer');
     surveyImageContainer.textContent = '';
     images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
 
@@ -141,9 +143,9 @@ imagesOnScreen[2].shownAmount++;
 // populate Chartjs with data
 function displayMetrics(){
 
-  //invokes percentage calculator with object parameter arguments and updates percentChosen parameter
+  //invokes percentage calculator with object parameter arguments and updates chosenPercent parameter
   for (var i = 0; i < images.length; i++){
-    images[i].percentChosen = getPercentage(images[i].clickAmount, images[i].shownAmount);
+    images[i].chosenPercent = getPercentage(images[i].clickAmount, images[i].shownAmount);
   }
 
   //return all objects to images array
@@ -242,3 +244,34 @@ function displayMetrics(){
     }
   });
 }
+
+// below is cleaner chart code template
+
+// var data = {
+//   labels: ['duncan', 'slug', 'glorb', 'quazi'],
+//   datasets: [
+//     {
+//       backgroundColor: [
+//         '#f0f',
+//         '#0f0',
+//         '#f00',
+//         '#0ff',
+//       ],
+//       data: [ 23, 34, 73, 60]
+//     },
+//     {
+//       backgroundImage: [
+//         'url("./assets/banana.jpg")',
+//         '#0f0',
+//         '#f00',
+//         '#0ff',
+//       ],
+//       data: [ 34, 44, 99, 70]
+//     },
+//   ]
+// }
+//
+// new Chart(ctx, {
+//   type: 'doughnut',
+//   data: data,
+// });
