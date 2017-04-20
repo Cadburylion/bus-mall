@@ -14,7 +14,7 @@ function SurveyImage(name, filename) {
 function selectRandomImagesIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
-
+// calculates percentage of times an item was picked when shown
 function getPercentage(click, shown){
   return click / shown * 100;
 }
@@ -119,9 +119,6 @@ function handleEventClick(event){
     } catch(error){
       console.log('something went wrong', error);
     }
-
-
-
   }
 
   //invoke selectThreeRandomImages to get 3 random objects into imagesOnScreen array
@@ -147,6 +144,7 @@ imagesOnScreen[2].shownAmount++;
 // populate Chartjs with data
 function displayMetrics(){
 
+  //invokes percentage calculator with object parameter arguments and updates percentChosen parameter 
   for (var i = 0; i < images.length; i++){
     images[i].percentChosen = getPercentage(images[i].clickAmount, images[i].shownAmount);
   }
