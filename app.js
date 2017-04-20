@@ -41,9 +41,15 @@ var images = [
   new SurveyImage('wine-glass', 'wine-glass.jpg'),
 ];
 
+try {
+  images = JSON.parse(localStorage.images);
+} catch(error){
+  console.log('error retreiving local storage');
+}
 
 function selectThreeRandomImages(){
 // objects in imagesOnSecondPreviousScreen added to images array
+// console.log('select images', imagesOnSecondPreviousScreen);
   images = images.concat(imagesOnSecondPreviousScreen);
   // imagesOnSecondPreviousScreen assigned value of objects in imagesOnPreviousScreen
   imagesOnSecondPreviousScreen = imagesOnPreviousScreen;
@@ -72,16 +78,17 @@ var firstImage = document.getElementById('image1');
 var secondImage = document.getElementById('image2');
 var thirdImage = document.getElementById('image3');
 
-// add event listeners to DOM id's that invoke handleEvent when user clicks any image
+// add event listeners to DOM id's that invoke handleEventClick when user clicks any image
 
-firstImage.addEventListener('click', handleEvent);
-secondImage.addEventListener('click', handleEvent);
-thirdImage.addEventListener('click', handleEvent);
+firstImage.addEventListener('click', handleEventClick);
+secondImage.addEventListener('click', handleEventClick);
+thirdImage.addEventListener('click', handleEventClick);
 
 
 // Displays three randomly selected images on the index page
 
-function handleEvent(event){
+function handleEventClick(event){
+  console.log('images', images);
   totalClicks++;
 //if the event fired on the firstImage element, increment clickAmount on imagesOnScreen[0]
   if (firstImage === event.target){
@@ -98,8 +105,18 @@ function handleEvent(event){
   if (totalClicks === 25){
     // set the content of the surveyImageContainer element to nothing, erasing it
     surveyImageContainer.textContent = '';
+    images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
 
     displayMetrics();
+
+    try {
+      localStorage.images = JSON.stringify(images);
+    } catch(error){
+      console.log('something went wrong', error);
+    }
+
+
+
   }
 
   //invoke selectThreeRandomImages to get 3 random objects into imagesOnScreen array
@@ -126,9 +143,9 @@ imagesOnScreen[2].shownAmount++;
 function displayMetrics(){
 
   //return all objects to images array
-  images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
 
   var ctx = document.getElementById('survey-metrics').getContext('2d');
+
   var myChart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
@@ -199,14 +216,14 @@ function displayMetrics(){
           'rgba(178, 84, 183, 0.2)',
           'rgba(50, 83, 234, 0.2)',
         ],
-        borderColor: [
-          'rgba(255,99,132,1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
+        // borderColor: [
+        //   'rgba(255,99,132,1)',
+        //   'rgba(54, 162, 235, 1)',
+        //   'rgba(255, 206, 86, 1)',
+        //   'rgba(75, 192, 192, 1)',
+        //   'rgba(153, 102, 255, 1)',
+        //   'rgba(255, 159, 64, 1)'
+        // ],
         borderWidth: 1
       }]
     },
