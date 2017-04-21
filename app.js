@@ -151,8 +151,6 @@ function displayMetrics(){
     images[i].chosenPercent = getPercentage(images[i].clickAmount, images[i].shownAmount);
   }
 
-  //
-
   var data = {
     labels: [],
     datasets: [
@@ -166,7 +164,6 @@ function displayMetrics(){
         data: [],
         backgroundColor: [],
       },
-
     ],
 
   };
