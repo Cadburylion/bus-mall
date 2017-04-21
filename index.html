@@ -7,12 +7,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
   </head>
   <body>
+    <div class="hamburger-menu hidden" id="hamburgerMenu">
+      <div class="buttons">
+        <input type="button" value="Refresh Page" onClick="window.location.reload()" class="restart-button">
+        <input type="button" value="Clear Data" onClick="window.location.reload()" class="clear-data">
+      </div>
+      <div class="hamburger-icon" id="hamburgerIcon">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <section id="survey">
-      <h1 id="firstHeading" class="survey-question">Which product is most appealing to you?</h1>
+      <h1 id="heading" class="survey-question">Which product is most appealing to you?</h1>
       <div id="surveyImageContainer">
-        <img class ="image-size" id="image1" />
-        <img class ="image-size" id="image2" />
-        <img class ="image-size" id="image3" />
+        <img class ="image1" id="image1" />
+        <img class ="image2" id="image2" />
+        <img class ="image3" id="image3" />
       </div>
       <div id="canvas-div">
       <canvas id="survey-metrics"></canvas>

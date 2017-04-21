@@ -53,8 +53,8 @@ try {
 }
 
 function selectThreeRandomImages(){
-// objects in imagesOnSecondPreviousScreen added to images array
-// console.log('select images', imagesOnSecondPreviousScreen);
+  // objects in imagesOnSecondPreviousScreen added to images array
+  // console.log('select images', imagesOnSecondPreviousScreen);
   images = images.concat(imagesOnSecondPreviousScreen);
   // imagesOnSecondPreviousScreen assigned value of objects in imagesOnPreviousScreen
   imagesOnSecondPreviousScreen = imagesOnPreviousScreen;
@@ -94,13 +94,13 @@ thirdImage.addEventListener('click', handleEventClick);
 function handleEventClick(event){
   console.log('images', images);
   totalClicks++;
-//if the event fired on the firstImage element, increment clickAmount on imagesOnScreen[0]
+  //if the event fired on the firstImage element, increment clickAmount on imagesOnScreen[0]
   if (firstImage === event.target){
     imagesOnScreen[0].clickAmount++;
-//if the event fired on the secondImage element, increment clickAmount on imagesOnScreen[1]
+    //if the event fired on the secondImage element, increment clickAmount on imagesOnScreen[1]
   } else if (secondImage === event.target){
     imagesOnScreen[1].clickAmount++;
-//if the event fired on the thirdImage element, increment clickAmount on imagesOnScreen[2]
+    //if the event fired on the thirdImage element, increment clickAmount on imagesOnScreen[2]
   } else {
     imagesOnScreen[2].clickAmount++;
   }
@@ -110,6 +110,9 @@ function handleEventClick(event){
     var surveyImageContainer = document.getElementById('surveyImageContainer');
     surveyImageContainer.textContent = '';
     images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
+
+    var heading = document.getElementById('heading');
+    heading.textContent = 'Your results!';
 
     displayMetrics();
 
@@ -148,130 +151,77 @@ function displayMetrics(){
     images[i].chosenPercent = getPercentage(images[i].clickAmount, images[i].shownAmount);
   }
 
-  //return all objects to images array
+  //
+
+  var data = {
+    labels: [],
+    datasets: [
+      {
+        label: 'click count',
+        data: [],
+        backgroundColor: [],
+      },
+      {
+        label: 'display count',
+        data: [],
+        backgroundColor: [],
+      },
+
+    ],
+
+  };
+  // generates incremented hsl colors dynamically applied to chart data bars
+  var dataColorStart = 'hsl(';
+  var dataColorEnd = ',100%,50%)';
+  var dataColorEndOpacity = ',100%, 35%)';
+
+  var dataColor = -18;
+  for (var c = 0; c < images.length; c++) {
+    dataColor += 18;
+    data.datasets[0].backgroundColor.push(dataColorStart + dataColor + dataColorEnd);
+    data.datasets[1].backgroundColor.push(dataColorStart + dataColor + dataColorEndOpacity);
+
+  }
+  // dynamically populates chart data arrays
+  var currentImage;
+  for (var j = 0; j < images.length; j++){
+    currentImage = images[j];
+    data.labels.push(currentImage.name);
+    data.datasets[0].data.push(currentImage.clickAmount);
+    data.datasets[1].data.push(currentImage.shownAmount);
+  }
 
   var ctx = document.getElementById('survey-metrics').getContext('2d');
 
-  var myChart = new Chart(ctx, {
+  new Chart(ctx, {
     type: 'horizontalBar',
-    data: {
-      labels: [
-        images[0].name,
-        images[1].name,
-        images[2].name,
-        images[3].name,
-        images[4].name,
-        images[5].name,
-        images[6].name,
-        images[7].name,
-        images[8].name,
-        images[9].name,
-        images[10].name,
-        images[11].name,
-        images[12].name,
-        images[13].name,
-        images[14].name,
-        images[15].name,
-        images[16].name,
-        images[17].name,
-        images[18].name,
-        images[19].name,
-      ],
-      datasets: [{
-        label: '# of times chosen',
-        data: [
-          images[0].clickAmount,
-          images[1].clickAmount,
-          images[2].clickAmount,
-          images[3].clickAmount,
-          images[4].clickAmount,
-          images[5].clickAmount,
-          images[6].clickAmount,
-          images[7].clickAmount,
-          images[8].clickAmount,
-          images[9].clickAmount,
-          images[10].clickAmount,
-          images[11].clickAmount,
-          images[12].clickAmount,
-          images[13].clickAmount,
-          images[14].clickAmount,
-          images[15].clickAmount,
-          images[16].clickAmount,
-          images[17].clickAmount,
-          images[18].clickAmount,
-          images[19].clickAmount,
-        ],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(84, 132, 50, 0.2)',
-          'rgba(39, 23, 184, 0.2)',
-          'rgba(255, 0, 0, 0.2)',
-          'rgba(123, 255, 74, 0.2)',
-          'rgba(23, 132, 230, 0.2)',
-          'rgba(173, 234, 100, 0.2)',
-          'rgba(98, 200, 132, 0.2)',
-          'rgba(25, 50, 255, 0.2)',
-          'rgba(123, 123, 123, 0.2)',
-          'rgba(223, 218, 12, 0.2)',
-          'rgba(90, 90, 255, 0.2)',
-          'rgba(178, 84, 183, 0.2)',
-          'rgba(50, 83, 234, 0.2)',
-        ],
-        // borderColor: [
-        //   'rgba(255,99,132,1)',
-        //   'rgba(54, 162, 235, 1)',
-        //   'rgba(255, 206, 86, 1)',
-        //   'rgba(75, 192, 192, 1)',
-        //   'rgba(153, 102, 255, 1)',
-        //   'rgba(255, 159, 64, 1)'
-        // ],
-        borderWidth: 1
-      }]
-    },
+    data: data,
     options: {
-      scales: {
-        xAxes: [{
-          ticks: {
-            beginAtZero:true
-          }
-        }]
-      }
+      legend: {
+        labels: {
+          boxWidth: 0
+        }
+      },
     }
   });
 }
 
-// below is cleaner chart code template
+// adds a hamburger menu that has two buttons in it
+var hamburgerMenu = document.getElementById('hamburgerMenu');
+var hamburgerIcon = document.getElementById('hamburgerIcon');
 
-// var data = {
-//   labels: ['duncan', 'slug', 'glorb', 'quazi'],
-//   datasets: [
-//     {
-//       backgroundColor: [
-//         '#f0f',
-//         '#0f0',
-//         '#f00',
-//         '#0ff',
-//       ],
-//       data: [ 23, 34, 73, 60]
-//     },
-//     {
-//       backgroundImage: [
-//         'url("./assets/banana.jpg")',
-//         '#0f0',
-//         '#f00',
-//         '#0ff',
-//       ],
-//       data: [ 34, 44, 99, 70]
-//     },
-//   ]
-// }
-//
-// new Chart(ctx, {
-//   type: 'doughnut',
-//   data: data,
-// });
+
+hamburgerIcon.addEventListener('click', function(){
+  if(hamburgerMenu.className == 'hamburger-menu hidden') {
+    hamburgerMenu.className = 'hamburger-menu';
+  } else {
+    hamburgerMenu.className = 'hamburger-menu hidden';
+  }
+}
+);
+
+// sets functionality of clear data button to clear local storage
+var clearLocalStorage = document.getElementById('clear-data');
+clearLocalStorage.addEventListener('click', function(){
+  localStorage.clear();
+});
