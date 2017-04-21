@@ -169,8 +169,8 @@ function displayMetrics(){
   };
   // generates incremented hsl colors dynamically applied to chart data bars
   var dataColorStart = 'hsl(';
-  var dataColorEnd = ',100%,50%)';
-  var dataColorEndOpacity = ',100%, 35%)';
+  var dataColorEnd = ',100%,40%)';
+  var dataColorEndOpacity = ',100%, 75%)';
 
   var dataColor = -18;
   for (var c = 0; c < images.length; c++) {
@@ -221,4 +221,5 @@ hamburgerIcon.addEventListener('click', function(){
 var clearLocalStorage = document.getElementById('clear-data');
 clearLocalStorage.addEventListener('click', function(){
   localStorage.clear();
+  alert('Survey data has been cleared!');
 });
