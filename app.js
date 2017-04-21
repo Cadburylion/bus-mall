@@ -111,6 +111,9 @@ function handleEventClick(event){
     surveyImageContainer.textContent = '';
     images = images.concat(imagesOnSecondPreviousScreen, imagesOnPreviousScreen, imagesOnScreen);
 
+    var heading = document.getElementById('heading');
+    heading.textContent = 'Your results!';
+
     displayMetrics();
 
     try {
@@ -148,7 +151,7 @@ function displayMetrics(){
     images[i].chosenPercent = getPercentage(images[i].clickAmount, images[i].shownAmount);
   }
 
-  // below is cleaner chart code template
+  //
 
   var data = {
     labels: [],
@@ -163,9 +166,11 @@ function displayMetrics(){
         data: [],
         backgroundColor: [],
       },
-    ],
-  };
 
+    ],
+
+  };
+  // generates incremented hsl colors dynamically applied to chart data bars
   var dataColorStart = 'hsl(';
   var dataColorEnd = ',100%,50%)';
   var dataColorEndOpacity = ',100%, 35%)';
@@ -177,7 +182,7 @@ function displayMetrics(){
     data.datasets[1].backgroundColor.push(dataColorStart + dataColor + dataColorEndOpacity);
 
   }
-
+  // dynamically populates chart data arrays
   var currentImage;
   for (var j = 0; j < images.length; j++){
     currentImage = images[j];
@@ -191,5 +196,32 @@ function displayMetrics(){
   new Chart(ctx, {
     type: 'horizontalBar',
     data: data,
+    options: {
+      legend: {
+        labels: {
+          boxWidth: 0
+        }
+      },
+    }
   });
 }
+
+// adds a hamburger menu that has two buttons in it
+var hamburgerMenu = document.getElementById('hamburgerMenu');
+var hamburgerIcon = document.getElementById('hamburgerIcon');
+
+
+hamburgerIcon.addEventListener('click', function(){
+  if(hamburgerMenu.className == 'hamburger-menu hidden') {
+    hamburgerMenu.className = 'hamburger-menu';
+  } else {
+    hamburgerMenu.className = 'hamburger-menu hidden';
+  }
+}
+);
+
+// sets functionality of clear data button to clear local storage
+var clearLocalStorage = document.getElementById('clear-data');
+clearLocalStorage.addEventListener('click', function(){
+  localStorage.clear();
+});
